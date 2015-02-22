@@ -10,17 +10,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="bower_components/ui/css/ui.css" rel="stylesheet">
 
         <!-- all core CreateJS and 3rd party libraries are listed here: -->
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="bower_components/lodash/lodash.min.js"></script>
-        <script src="bower_components/easeljs/lib/easeljs-0.8.0.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.3.0/lodash.min.js"></script>
+        <script src="https://code.createjs.com/easeljs-0.8.0.min.js"></script>
+        
         <script src="bower_components/opspark-draw/draw.js"></script>
+        <script src="bower_components/ui/ui.js"></script>
         
         <script src="js/util/load.js"></script>
         <script src="js/model.js"></script>
-        <script src="js/ui.js"></script>
         <script src="js/opspark.js"></script>
     </head>
     <body>
@@ -47,10 +48,10 @@
                 
                 var i, values, settings, shape;
                 
-                model.loadData('data.json', function (data) {
+                model.loadData("data.json", function (data) {
                     settings = data.settings;
                     values = data.values;
-                    ui.makeControls(values, settings, view, reset);
+                    ui.makeControls("#formControls", values, settings, reset);
                     
                     i = 0;
                     app.addUpdateable({update: update});
@@ -84,6 +85,7 @@
                      * The shape also moves along the y axis using values 
                      * generated from a cosine wave.
                      * 
+                     * Sine: ratio: opposite / hypotenuse:
                      * Math.sin() returns a numeric value between -1 and 1, 
                      * which represents the sine of the angle given in radians.
                      * 
@@ -91,7 +93,7 @@
                      * side that is opposite that angle to (divided by) the 
                      * length of the longest side of the triangle (i.e. the hypotenuse).
                      * 
-                     * 
+                     * Cosine:
                      * 
                      * The last two operations ensure we draw within the range 
                      * of the axis amplitude (in pixels), then centered within 

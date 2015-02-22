@@ -11,7 +11,7 @@
         {"id": "yAngle", "allowInput": false, "value": 0},
         {"id": "rotation", "allowInput": false, "value": 0},
         
-        {"id": "applyScaleX", "type": "boolean", "label": "apply x scale", "allowInput": true, "value": 1},
-        {"id": "applyScaleY", "type": "boolean", "label": "apply y scale", "allowInput": true, "value": 1}
+        {"id": "applyScaleX", "type": "checkbox", "label": "apply x scale", "allowInput": true, "value": 1, "checked": true},
+        {"id": "applyScaleY", "type": "checkbox", "label": "apply y scale", "allowInput": true, "value": 1, "checked": true}
     ]
 }
