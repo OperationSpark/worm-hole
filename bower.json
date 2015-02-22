@@ -23,6 +23,6 @@
   ],
   "dependencies": {
     "opspark-draw": "~0.3.14",
-    "ui": "~0.0.4"
+    "ui": "~0.0.5"
   }
 }

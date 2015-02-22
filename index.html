@@ -51,7 +51,7 @@
                 model.loadData("data.json", function (data) {
                     settings = data.settings;
                     values = data.values;
-                    ui.makeControls("#formControls", values, settings, reset);
+                    ui.makeControls(values, settings, reset);
                     
                     i = 0;
                     app.addUpdateable({update: update});
