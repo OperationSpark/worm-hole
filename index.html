@@ -63,19 +63,44 @@
                 }
                 
                 function update() {
-                    // optimization //
+                    /*
+                     * OPTIMIZATION:
+                     *
+                     * Remove any circles past the max tail length, otherwise
+                     * our FPS (performance) will start to suffer.
+                     */
                     if (i > values.tail) { view.removeChildAt(0); }
                     
-                    shape = draw.circle(50, null, '#CCC', 2);
+                    // On each tick, we draw a new circle //
+                    shape = draw.circle(50, null, '#BBB', 2);
                     
-                    // input variation //
-                    values.xAngle += values.xSpeed;
-                    values.yAngle += values.ySpeed;
+                    /* 
+                     * APPLY INPUT VARIATIONS:
+                     *
+                     * On each tick, we adjust values based on the view's settings.
+                     * Doing so affects how fast we're moving on the x and y axis, 
+                     * the position on the x and y axis, and amplitude on each axis.
+                     *
+                     * We're using xVelocity and yVelocity as variants to increment 
+                     * our angles on the x and y axis.
+                     * 
+                     * As these angles increase, we're generating sine and cosine 
+                     * values, which are used to position the circle. In doing so, 
+                     * it's like we're plotting the sine/cosine wave, but used in 
+                     * our animation, the result is a wave like motion.
+                     *
+                     * Because we're applying both sine and cosine, the wave 
+                     * appears figure-8-like.
+                     *
+                     */
+                    values.xAngle += values.xVelocity;
+                    values.yAngle += values.yVelocity;
                     
+                    // Convert the incremented angles to radians //
                     var xRadians = values.xAngle * Math.PI / 180;
                     var yRadians = values.yAngle * Math.PI / 180;
                     
-                    // period //
+                    // period: shows number of cycles on x and y //
                     // console.log('x: ', values.xAngle / 360);
                     // console.log('y: ', values.yAngle / 360);
                     
@@ -93,20 +118,33 @@
                      * side that is opposite that angle to (divided by) the 
                      * length of the longest side of the triangle (i.e. the hypotenuse).
                      * 
-                     * Cosine:
-                     * 
-                     * The last two operations ensure we draw within the range 
-                     * of the axis amplitude (in pixels), then centered within 
-                     * the canvas.
+                     * Cosine: ratio: adjacent / hypotenuse:
+                     * Math.cos() returns a numeric value between -1 and 1, 
+                     * which represents the cosine of the angle given in radians.
+                     *
+                     * The cosine of the angle is the ratio of the length of the 
+                     * side that is adjacent that angle to (divided by) the 
+                     * length of the longest side of the triangle (i.e. the hypotenuse).
                      */
                     var xSine = Math.sin(xRadians);
                     var xCosine = Math.cos(xRadians);
                     var ySine = Math.sin(yRadians);
                     var yCosine = Math.cos(yRadians);
                     
-                    shape.x = xSine * values.xAmplitude + (canvas.width / 2);
-                    shape.y = yCosine * values.yAmplitude + (canvas.height / 2);
+                    /*
+                     * The next two operations ensure we draw within the range 
+                     * of the axis amplitude (in pixels), then centered within 
+                     * the canvas.
+                     *
+                     * You can play with swapping out xSine for xCosine, etc, to
+                     * see what effects can be created.
+                     */
+                    shape.x = yCosine * values.xAmplitude + (canvas.width / 2);
+                    shape.y = xSine * values.yAmplitude + (canvas.height / 2);
                     
+                    /*
+                     * Continue to rotate the circle based on the degrees setting.
+                     */
                     shape.rotation = values.rotation += values.degrees;
                     
                     shape.alpha = 0.3;
